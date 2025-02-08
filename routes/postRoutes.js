@@ -3,23 +3,23 @@ const router = express.Router();
 const { authenticateUser } = require("../middleware/authentication");
 
 const {
-  createProfile,
-  deleteProfile,
-  getAllProfiles,
-  updateProfile,
-  getProfile,
-} = require("../controllers/profileController");
+  createPost,
+  deletePost,
+  getAllPosts,
+  updatePost,
+  getPost,
+} = require("../controllers/postsController");
 
 const { uploadImage } = require("../controllers/uploadsController");
 
-router.route("/").post(authenticateUser, createProfile).get(getAllProfiles);
+router.route("/").post(authenticateUser, createPost).get(getAllPosts);
 
 router.route("/uploads").post(authenticateUser, uploadImage);
 
 router
   .route("/:id")
-  .get(getProfile)
-  .delete(authenticateUser, deleteProfile)
-  .patch(authenticateUser, updateProfile);
+  .get(getPost)
+  .delete(authenticateUser, deletePost)
+  .patch(authenticateUser, updatePost);
 
 module.exports = router;

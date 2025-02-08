@@ -31,6 +31,7 @@ const authRouter = require("./routes/authRoutes");
 const userRouter = require("./routes/userRoutes");
 const profileRouter = require("./routes/profileRoutes");
 const contactRouter = require("./routes/contactRoutes");
+const postRouter = require("./routes/postRoutes");
 
 // middleware
 const notFoundMiddleware = require("./middleware/not-found");
@@ -58,6 +59,12 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/profile", profileRouter);
 app.use("/api/v1/contacts", contactRouter);
+app.use("/api/v1/posts", postRouter);
+
+// Ruta para SPA (Single Page Application)
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client/dist", "index.html"));
+});
 
 // Middleware de errores
 app.use(notFoundMiddleware);
