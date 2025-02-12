@@ -5,6 +5,7 @@ import AboutUsList from "../components/shared/AboutUsList";
 import AddAboutUs from "../components/shared/AddAboutUs"; // Modal para añadir información
 import logo from "../../assets/logo.png"; // Ruta al logo
 import Footer from "../components/Footer";
+import { Requirements } from "../components/shared/requirements";
 
 const AboutUs = () => {
   const { authState } = useContext(AuthContext); // Obtiene el estado de autenticación
@@ -53,12 +54,15 @@ const AboutUs = () => {
         </div>
 
         {/* Subtítulo */}
-        <p className="text-xl font-bold text-teal-500 mb-6">
+        <p className="text-xl font-bold text-blue-300 mb-6">
           Nuestro compromiso es mejorar la calidad de vida de los adultos
           mayores a través de actividades recreativas, artísticas y culturales
           que promueven su bienestar integral. ¡Únete a esta misión de
           ofrecerles momentos llenos de alegría y cuidado!
         </p>
+
+        {/* Requisitos de Ingreso*/}
+        <Requirements />
 
         {/* Lista de información */}
         <AboutUsList
