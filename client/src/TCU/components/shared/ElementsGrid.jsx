@@ -6,7 +6,7 @@ import { DeleteModal } from "./DeleteModal";
 import { EditModal } from "./EditModal";
 import PropTypes from "prop-types";
 import axios from "axios";
-import { updatePost, uploadImage } from "../../utils/productService";
+import { updatePost, uploadImage } from "../../utils/profileService";
 
 export const ElementsGrid = ({
   data,
@@ -14,49 +14,49 @@ export const ElementsGrid = ({
   onCloseDeleteModal,
   onCloseEditModal,
 }) => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProfile, setSelectedProfile] = useState(null);
   const [showContactForm, setShowContactForm] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [productToDelete, setProductToDelete] = useState(null);
+  const [profileToDelete, setProfileToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [productToEdit, setProductToEdit] = useState(null);
-  const [productName, setProductName] = useState("");
+  const [profileToEdit, setProfileToEdit] = useState(null);
+  const [profileName, setProfileName] = useState("");
 
-  // Filtro segun tipo
-  const filteredProducts = searchTerm
+  // Filtrar perfiles por nombre
+  const filteredProfiles = searchTerm
     ? data?.filter((element) =>
         element.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : data;
 
   const handleViewDetails = (element) => {
-    setSelectedProduct(element);
+    setSelectedProfile(element);
     setShowContactForm(false);
   };
 
   const handleCloseModal = () => {
-    setSelectedProduct(null);
+    setSelectedProfile(null);
   };
 
   const handleContact = (name) => {
-    setProductName(name); // Save the product name
+    setProfileName(name);
     setShowContactForm(true);
   };
 
-  const handleSetEditProduct = (product) => {
-    setProductToEdit(product);
+  const handleSetEditProfile = (profile) => {
+    setProfileToEdit(profile);
     setShowEditModal(true);
   };
 
-  const handleSetDeleteProduct = (product) => {
-    setProductToDelete(product);
+  const handleSetDeleteProfile = (profile) => {
+    setProfileToDelete(profile);
     setShowDeleteModal(true);
   };
 
   const handleDelete = () => {
-    const productId = productToDelete?._id;
+    const profileId = profileToDelete?._id;
 
-    axios.delete(`/api/v1/products/${productId}`).catch(() => {
+    axios.delete(`/api/v1/profile/${profileId}`).catch(() => {
       console.log("error");
     });
 
@@ -64,65 +64,66 @@ export const ElementsGrid = ({
     setShowDeleteModal(false);
   };
 
-  const handleEdit = async (updatedProduct) => {
+  const handleEdit = async (updatedProfile) => {
     let imageUrl = "";
-    if (updatedProduct.imageLoaded) {
+    if (updatedProfile.imageLoaded) {
       const formData = new FormData();
-      formData.append("image", updatedProduct.image);
+      formData.append("image", updatedProfile.image);
       const { data } = await uploadImage(formData);
       imageUrl = data.image.src;
     }
 
-    const newProductData = {
-      name: updatedProduct.name,
-      description: updatedProduct.description,
-      price: updatedProduct.price,
-      state: updatedProduct.state,
-      image: updatedProduct.imageLoaded ? imageUrl : updatedProduct.image,
+    const newProfileData = {
+      name: updatedProfile.name,
+      lastname: updatedProfile.lastname,
+      age: updatedProfile.age,
+      description: updatedProfile.description,
+      state: updatedProfile.state,
+      image: updatedProfile.imageLoaded ? imageUrl : updatedProfile.image,
     };
 
-    await updatePost(updatedProduct._id, newProductData);
+    await updatePost(updatedProfile._id, newProfileData);
     onCloseEditModal();
     setShowEditModal(false);
   };
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 max-w-6xl mx-auto">
-        {filteredProducts?.map((element) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto">
+        {filteredProfiles?.slice(0, 3).map((element) => (
           <ItemCard
             key={element._id}
             name={element.name}
             description={element.description}
+            age={element.age}
             image={element.image}
             type={element.type}
-            price={element.price}
             state={element.state}
             onViewDetails={() => handleViewDetails(element)}
-            onEdit={() => handleSetEditProduct(element)}
-            onDelete={() => handleSetDeleteProduct(element)}
+            onEdit={() => handleSetEditProfile(element)}
+            onDelete={() => handleSetDeleteProfile(element)}
           />
         ))}
       </div>
 
-      {selectedProduct && (
+      {selectedProfile && (
         <ItemDetailsCard
-          data={selectedProduct}
+          data={selectedProfile}
           onClose={handleCloseModal}
-          onContact={handleContact} // Pass contact handler
+          onContact={handleContact}
         />
       )}
 
       {showContactForm && (
         <ContactCard
-          productName={productName} // Pass productName to ContactCard
+          profileName={profileName}
           onClose={() => setShowContactForm(false)}
         />
       )}
 
       {showDeleteModal && (
         <DeleteModal
-          product={productToDelete}
+          profile={profileToDelete}
           onClose={() => setShowDeleteModal(false)}
           onConfirm={handleDelete}
         />
@@ -130,10 +131,8 @@ export const ElementsGrid = ({
 
       {showEditModal && (
         <EditModal
-          product={productToEdit}
-          onClose={() => {
-            setShowEditModal(false);
-          }}
+          profile={profileToEdit}
+          onClose={() => setShowEditModal(false)}
           onSave={handleEdit}
         />
       )}

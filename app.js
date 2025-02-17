@@ -1,19 +1,18 @@
 require("dotenv").config();
 require("express-async-errors");
-// express
 
+const path = require("path");
 const express = require("express");
 const app = express();
 
-// rest of the packages
-const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
-const fileUpload = require("express-fileupload");
-const rateLimiter = require("express-rate-limit");
+// Seguridad y limpieza
 const helmet = require("helmet");
 const xss = require("xss-clean");
-const cors = require("cors");
-const mongoSanitize = require("express-mongo-sanitize");
+
+// Paquetes adicionales
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+const fileUpload = require("express-fileupload");
 
 // Configuración de Cloudinary
 const cloudinary = require("cloudinary").v2;
@@ -44,15 +43,44 @@ app.use(cookieParser(process.env.JWT_SECRET)); // Cookies firmadas
 app.use(fileUpload({ useTempFiles: true })); // Subida de archivos
 app.use(morgan("tiny")); // Logger de solicitudes HTTP
 
-//Configuracion helmet
-app.use(helmet());
-
+// Configuración de Helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://unpkg.com",
+          "https://cdnjs.cloudflare.com",
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https://unpkg.com",
+          "https://cdnjs.cloudflare.com",
+        ],
+        fontSrc: ["'self'", "https://unpkg.com"],
+        imgSrc: ["'self'", "data:", "https:"],
+        frameSrc: ["'self'", "https://www.google.com"], // Permite cargar Google en iframes
+      },
+    },
+  })
+);
 app.use(xss()); // Protección contra XSS
-app.use(cors());
-app.use(mongoSanitize());
 
-app.use(express.json());
-app.use(cookieParser(process.env.JWT_SECRET));
+// Middleware para tipos MIME correctos
+app.use((req, res, next) => {
+  if (req.path.endsWith(".js")) {
+    res.type("application/javascript");
+  } else if (req.path.endsWith(".css")) {
+    res.type("text/css");
+  }
+  next();
+});
+
+// Servir archivos estáticos
+app.use(express.static(path.resolve(__dirname, "client/dist")));
 
 // Rutas de API
 app.use("/api/v1/auth", authRouter);

@@ -55,10 +55,10 @@ const AboutUs = () => {
 
         {/* Subtítulo */}
         <p className="text-xl font-bold text-blue-300 mb-6">
-          Nuestro compromiso es mejorar la calidad de vida de los adultos
-          mayores a través de actividades recreativas, artísticas y culturales
-          que promueven su bienestar integral. ¡Únete a esta misión de
-          ofrecerles momentos llenos de alegría y cuidado!
+          Buscamos enriquecer la vida de los adultos mayores con actividades
+          recreativas, artísticas y culturales que fomenten su bienestar
+          integral. Sé parte de esta hermosa misión y ayúdanos a brindarles
+          momentos de alegría, compañía y cuidado.
         </p>
 
         {/* Requisitos de Ingreso*/}
