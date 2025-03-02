@@ -39,7 +39,7 @@
     "nodemon": "^2.0.9"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
-  "proxy": "http://localhost:3000"
+  "proxy": "http://localhost:5000"
 }
