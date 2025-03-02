@@ -6,6 +6,7 @@ import ElementModal from "../components/ElementModal";
 import { AuthContext } from "../../auth/context/AuthContext";
 import axios from "axios";
 import Footer from "../components/Footer";
+import Founder from "../components//shared/FounderCard";
 import PersonalHeader from "../components/shared/PersonalHeader";
 
 const Personal = () => {
@@ -57,6 +58,10 @@ const Personal = () => {
   const onCloseModal = () => {
     console.log("Cerrando modal y refrescando datos...");
     getProfileList();
+    setElementModalAnimationStyle("animate__animated animate__fadeOut");
+    setTimeout(() => {
+      setElementModalAnimationStyle("animate__animated animate__fadeIn");
+    }, 500);
   };
 
   return (
@@ -116,6 +121,8 @@ const Personal = () => {
             </p>
           )}
         </div>
+        {/* Foto de FUndadora */}
+        <Founder />
       </div>
 
       <Footer className="mt-auto" />

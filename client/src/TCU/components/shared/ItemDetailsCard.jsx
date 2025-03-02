@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export const ItemDetailsCard = ({ data, onClose, onContact }) => {
+export const ItemDetailsCard = ({ data, onClose }) => {
   if (!data) return null;
 
   return (
@@ -18,15 +18,6 @@ export const ItemDetailsCard = ({ data, onClose, onContact }) => {
         )}
         <div className="mt-4">
           <button
-            onClick={() => {
-              console.log("Contactando para:", data.name); // Debugging
-              onContact(data.name);
-            }}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Solicitar información
-          </button>
-          <button
             onClick={onClose}
             className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-2"
           >
@@ -41,5 +32,4 @@ export const ItemDetailsCard = ({ data, onClose, onContact }) => {
 ItemDetailsCard.propTypes = {
   data: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
-  onContact: PropTypes.func.isRequired,
 };

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ContactCard } from "./ContactCard";
 import ItemCard from "./ItemCard";
 import { ItemDetailsCard } from "./ItemDetailsCard";
 import { DeleteModal } from "./DeleteModal";
@@ -20,7 +19,6 @@ export const ElementsGrid = ({
   const [profileToDelete, setProfileToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [profileToEdit, setProfileToEdit] = useState(null);
-  const [profileName, setProfileName] = useState("");
 
   // Filtrar perfiles por nombre
   const filteredProfiles = searchTerm
@@ -36,11 +34,6 @@ export const ElementsGrid = ({
 
   const handleCloseModal = () => {
     setSelectedProfile(null);
-  };
-
-  const handleContact = (name) => {
-    setProfileName(name);
-    setShowContactForm(true);
   };
 
   const handleSetEditProfile = (profile) => {
@@ -90,10 +83,11 @@ export const ElementsGrid = ({
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 max-w-6xl mx-auto">
-        {filteredProfiles?.slice(0, 3).map((element) => (
+        {filteredProfiles?.map((element) => (
           <ItemCard
             key={element._id}
             name={element.name}
+            lastname={element.lastname}
             description={element.description}
             age={element.age}
             image={element.image}
@@ -107,18 +101,7 @@ export const ElementsGrid = ({
       </div>
 
       {selectedProfile && (
-        <ItemDetailsCard
-          data={selectedProfile}
-          onClose={handleCloseModal}
-          onContact={handleContact}
-        />
-      )}
-
-      {showContactForm && (
-        <ContactCard
-          profileName={profileName}
-          onClose={() => setShowContactForm(false)}
-        />
+        <ItemDetailsCard data={selectedProfile} onClose={handleCloseModal} />
       )}
 
       {showDeleteModal && (

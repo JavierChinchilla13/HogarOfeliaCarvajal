@@ -7,13 +7,11 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
     required: [true, "Porfavor ingrese un nombre"],
     maxlength: 50,
-    minlength: 3,
+    minlength: 2,
   },
   lastname: {
     type: String,
-    required: [true, "Porfavor ingrese un apellido"],
     maxlength: 50,
-    minlength: 3,
   },
   age: {
     type: Number,
@@ -25,10 +23,6 @@ const ProfileSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: {
-      values: ["personal", "residente"],
-      message: "{VALOR} no es soportado",
-    },
   },
   state: {
     type: Boolean,

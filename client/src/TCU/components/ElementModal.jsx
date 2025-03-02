@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Input from "./shared/Input";
 import Button from "./shared/Button";
@@ -6,28 +6,43 @@ import { createPost, uploadImage } from "../utils/profileService";
 import { useForm } from "../../hooks/useForm";
 
 const ElementModal = ({ isOpen, onClose, title, style }) => {
-  const { formState, onInputChange } = useForm({
+  const initialState = {
     name: "",
     lastname: "",
     description: "",
     age: "",
-  });
+    type: "",
+  };
 
+  const { formState, onInputChange } = useForm(initialState);
   const [state, setState] = useState(true);
-  const [profileType, setProfileType] = useState("personal");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isOpen) {
+      // 🔹 Reset manual
+      formState.name = "";
+      formState.lastname = "";
+      formState.description = "";
+      formState.age = "";
+      formState.type = "";
+      setImage(null);
+      setError("");
+    }
+  }, [isOpen]);
 
   const handleSubmit = async () => {
-    // Validación de los campos
-    if (!formState.name || !formState.description) {
-      alert("Todos los campos son requeridos.");
+    setError("");
+
+    if (!formState.name) {
+      setError("Por favor, ingrese un nombre.");
       return;
     }
 
-    const age = formState.age ? parseInt(formState.age, 10) : null;
-    if (formState.age && isNaN(age)) {
-      alert("La edad debe ser un número válido.");
+    if (!image) {
+      setError("Por favor, seleccione una imagen.");
       return;
     }
 
@@ -42,18 +57,17 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
         imageUrl = data.image.src;
       }
 
-      const { name, lastname, description } = formState;
+      const { name, lastname, description, type } = formState;
       const newProfile = {
         name,
         lastname,
-        age,
         description,
-        type: profileType,
+        type,
         state,
         image: imageUrl,
       };
 
-      console.log("Enviando perfil:", newProfile); // 🔹 Para depuración
+      console.log("Enviando perfil:", newProfile);
       await createPost(newProfile);
       onClose();
     } catch (error) {
@@ -72,9 +86,11 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full grid">
         <h2 className="text-xl font-semibold mb-4">{title}</h2>
 
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+
         <label>Nombre</label>
         <Input
-          text={formState.name}
+          value={formState.name}
           handleText={onInputChange}
           placeHolder="Nombre"
           nameRef="name"
@@ -82,7 +98,7 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
 
         <label>Apellido</label>
         <Input
-          text={formState.lastname}
+          value={formState.lastname}
           handleText={onInputChange}
           placeHolder="Apellido"
           nameRef="lastname"
@@ -90,15 +106,23 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
 
         <label>Edad</label>
         <Input
-          text={formState.age}
-          handleText={onInputChange}
+          type="number"
+          value={formState.age}
+          handleText={(e) =>
+            onInputChange({
+              target: { name: "age", value: e.target.value.replace(/\D/, "") },
+            })
+          }
           placeHolder="Edad"
           nameRef="age"
+          min={0}
+          max={120}
+          step={1}
         />
 
         <label>Descripción</label>
         <Input
-          text={formState.description}
+          value={formState.description}
           handleText={onInputChange}
           placeHolder="Descripción"
           nameRef="description"
@@ -114,20 +138,20 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
           <option value="false">Inactivo</option>
         </select>
 
-        <label>Tipo</label>
-        <select
-          value={profileType}
-          onChange={(e) => setProfileType(e.target.value)}
-          className="py-2 px-3 rounded-xl border-2 border-blue-300 mb-4"
-        >
-          <option value="personal">Personal</option>
-        </select>
+        <label>Puesto</label>
+        <Input
+          value={formState.type}
+          handleText={onInputChange}
+          placeHolder="Puesto"
+          nameRef="type"
+        />
 
         <label>Imagen</label>
         <input
           type="file"
           onChange={(e) => setImage(e.target.files[0])}
           className="mb-4"
+          accept="image/*"
         />
 
         <div className="flex justify-end space-x-2 mt-4">

@@ -5,7 +5,9 @@ import AboutUsList from "../components/shared/AboutUsList";
 import AddAboutUs from "../components/shared/AddAboutUs"; // Modal para añadir información
 import logo from "../../assets/logo.png"; // Ruta al logo
 import Footer from "../components/Footer";
-import { Requirements } from "../components/shared/requirements";
+import { Requirements } from "../components/shared/Requirements";
+import WellnessPrograms from "../components/shared/WellnessPrograms";
+import RecreationalActivities from "../components/shared/RecreationalActivities";
 
 const AboutUs = () => {
   const { authState } = useContext(AuthContext); // Obtiene el estado de autenticación
@@ -36,7 +38,7 @@ const AboutUs = () => {
           <div className="flex flex-col items-center mb-4">
             <img src={logo} alt="TCU" className="h-24 md:h-28 mb-4 mx-auto" />
             <h1 className="text-4xl font-bold text-gray-800 text-center">
-              Sobre Nosotros
+              Nuestro Hogar
             </h1>
           </div>
 
@@ -55,14 +57,31 @@ const AboutUs = () => {
 
         {/* Subtítulo */}
         <p className="text-xl font-bold text-blue-300 mb-6">
-          Buscamos enriquecer la vida de los adultos mayores con actividades
-          recreativas, artísticas y culturales que fomenten su bienestar
-          integral. Sé parte de esta hermosa misión y ayúdanos a brindarles
-          momentos de alegría, compañía y cuidado.
+          Somos una institución de bienestar social cuyo objetivo es brindar la
+          mejor cobertura posible a las necesidades básicas de la persona adulta
+          mayor de escasos recursos económicos. Velamos por una vejez digna.
         </p>
 
-        {/* Requisitos de Ingreso*/}
-        <Requirements />
+        {/* Requisitos de Ingreso */}
+        <div className="mb-10">
+          {" "}
+          {/* Agregamos un margen inferior */}
+          <Requirements />
+        </div>
+
+        {/* Programas de Bienestar */}
+        <div className="mb-10">
+          {" "}
+          {/* Agregamos un margen inferior */}
+          <WellnessPrograms />
+        </div>
+
+        {/* Actividades Recreativas */}
+        <div className="mb-10">
+          {" "}
+          {/* Agregamos un margen inferior */}
+          <RecreationalActivities />
+        </div>
 
         {/* Lista de información */}
         <AboutUsList

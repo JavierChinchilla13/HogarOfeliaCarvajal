@@ -6,7 +6,6 @@ import { useContext } from "react";
 const ItemCard = ({
   name,
   lastname,
-  age,
   image,
   type,
   state,
@@ -15,7 +14,6 @@ const ItemCard = ({
   onDelete,
 }) => {
   const { authState } = useContext(AuthContext);
-
   return (
     <div className="w-full max-w-md rounded-lg overflow-hidden shadow-lg bg-white relative z-0">
       <img className="w-full h-64 object-cover" src={image} alt={name} />
@@ -44,7 +42,6 @@ const ItemCard = ({
           )}
         </div>
         <p className="text-gray-600">{type}</p>
-        <p className="text-gray-500">Edad: {age}</p>
         {authState?.logged && (
           <p
             className={

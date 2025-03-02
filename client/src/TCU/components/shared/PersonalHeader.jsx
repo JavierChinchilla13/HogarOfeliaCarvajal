@@ -10,9 +10,11 @@ const PersonalHeader = () => {
       />
       <div className="relative z-10 text-center px-4">
         <h2 className="text-2xl font-bold text-white drop-shadow-md">
-          &ldquo;Dedicación, calidez y compromiso: nuestro equipo trabaja cada
-          día con amor para brindar bienestar, compañía y cuidado a nuestros
-          adultos mayores en el Hogar de Estar Ofelia Carvajal.&rdquo;
+          &ldquo;Contamos con calificados profesionales, competentes licenciados
+          (as) y doctores (as). Ponemos a su servicio; médico, enfermera,
+          nutricionista, psicóloga y fisioterapeutas, para brindarle atención
+          individual o interdisciplinaria pues conforman un completo equipo de
+          salud para el abordaje integral de toda su familia.&rdquo;
         </h2>
       </div>
     </div>

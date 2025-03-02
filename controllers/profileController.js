@@ -35,8 +35,8 @@ const updateProfile = async (req, res) => {
   console.log("backend");
   console.log(req.body);
 
-  if (name === "" || description === "" || state === "") {
-    throw new BadRequestError("Name or Description fields cannot be empty");
+  if (name === "" || state === "") {
+    throw new BadRequestError("Name field cannot be empty");
   }
   const profile = await Profile.findByIdAndUpdate(
     { _id: profileId },
