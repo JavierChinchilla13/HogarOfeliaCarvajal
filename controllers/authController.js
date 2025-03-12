@@ -27,7 +27,7 @@ const register = async (req, res) => {
     password,
     verificationToken,
   });
-  const origin = "https://hogarofeliacarvajal.onrender.com/";
+  const origin = "https://hogarofeliacarvajal.onrender.com";
   // const origin = "http://localhost:5000";
   const origin2 = req.get("origin");
   const protocol = req.protocol;
@@ -147,7 +147,7 @@ const forgotPassword = async (req, res) => {
   if (user) {
     const passwordToken = crypto.randomBytes(70).toString("hex");
     //send email
-    const origin = "https://hogarofeliacarvajal.onrender.com/";
+    const origin = "https://hogarofeliacarvajal.onrender.com";
     // const origin = "http://localhost:5000";
 
     await sendResetPasswordEmail({
