@@ -7,7 +7,7 @@ const AboutUsCard = ({ title, description, image, onEdit, onDelete }) => {
   const { authState } = useContext(AuthContext);
 
   return (
-    <div className="   w-full flex flex-col">
+    <div className="bg-white shadow-lg rounded-2xl p-6 mt-10 max-w-4x2 mx-auto w-full flex flex-col">
       <div className="mb-6 p-4 w-full flex flex-col md:flex-row">
         {/* Texto a la izquierda */}
         <div className="flex-1 pr-0 md:pr-4 pt-2">

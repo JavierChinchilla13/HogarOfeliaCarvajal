@@ -20,8 +20,6 @@ export const AddAboutUs = ({ onClose, isOpen, onSave }) => {
       return;
     }
 
-
-    
     setLoading(true);
 
     try {
