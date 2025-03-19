@@ -7,15 +7,10 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
     required: [true, "Porfavor ingrese un nombre"],
     maxlength: 50,
-    minlength: 2,
   },
   lastname: {
     type: String,
     maxlength: 50,
-  },
-  age: {
-    type: Number,
-    maxlength: 3,
   },
   description: {
     type: String,

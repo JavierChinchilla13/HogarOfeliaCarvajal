@@ -14,7 +14,7 @@ export const ElementsGrid = ({
   onCloseEditModal,
 }) => {
   const [selectedProfile, setSelectedProfile] = useState(null);
-  const [showContactForm, setShowContactForm] = useState(false);
+  const [, setShowContactForm] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [profileToDelete, setProfileToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -69,7 +69,6 @@ export const ElementsGrid = ({
     const newProfileData = {
       name: updatedProfile.name,
       lastname: updatedProfile.lastname,
-      age: updatedProfile.age,
       description: updatedProfile.description,
       state: updatedProfile.state,
       image: updatedProfile.imageLoaded ? imageUrl : updatedProfile.image,
@@ -89,7 +88,6 @@ export const ElementsGrid = ({
             name={element.name}
             lastname={element.lastname}
             description={element.description}
-            age={element.age}
             image={element.image}
             type={element.type}
             state={element.state}

@@ -10,7 +10,6 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
     name: "",
     lastname: "",
     description: "",
-    age: "",
     type: "",
   };
 
@@ -26,7 +25,6 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
       formState.name = "";
       formState.lastname = "";
       formState.description = "";
-      formState.age = "";
       formState.type = "";
       setImage(null);
       setError("");
@@ -102,22 +100,6 @@ const ElementModal = ({ isOpen, onClose, title, style }) => {
           handleText={onInputChange}
           placeHolder="Apellido"
           nameRef="lastname"
-        />
-
-        <label>Edad</label>
-        <Input
-          type="number"
-          value={formState.age}
-          handleText={(e) =>
-            onInputChange({
-              target: { name: "age", value: e.target.value.replace(/\D/, "") },
-            })
-          }
-          placeHolder="Edad"
-          nameRef="age"
-          min={0}
-          max={120}
-          step={1}
         />
 
         <label>Descripción</label>

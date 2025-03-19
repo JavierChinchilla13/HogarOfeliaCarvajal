@@ -117,19 +117,6 @@ export const EditModal = ({ profile, onClose, onSave }) => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">Edad</label>
-            <input
-              type="number"
-              name="age"
-              value={formState.age}
-              onChange={onInputChange}
-              className="w-full p-2 border rounded"
-              min={0}
-              max={120}
-              step={1}
-            />
-          </div>
-          <div className="mb-4">
             <label className="block text-gray-700">Estado</label>
             <select
               value={state}

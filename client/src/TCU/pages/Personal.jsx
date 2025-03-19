@@ -6,7 +6,7 @@ import ElementModal from "../components/ElementModal";
 import { AuthContext } from "../../auth/context/AuthContext";
 import axios from "axios";
 import Footer from "../components/Footer";
-import Founder from "../components//shared/FounderCard";
+import Founder from "../components/shared/FounderCard";
 import PersonalHeader from "../components/shared/PersonalHeader";
 
 const Personal = () => {
