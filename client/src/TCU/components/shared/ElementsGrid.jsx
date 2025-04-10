@@ -71,6 +71,7 @@ export const ElementsGrid = ({
       lastname: updatedProfile.lastname,
       description: updatedProfile.description,
       state: updatedProfile.state,
+      type: updatedProfile.type,
       image: updatedProfile.imageLoaded ? imageUrl : updatedProfile.image,
     };
 

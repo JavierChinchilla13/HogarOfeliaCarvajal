@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useForm } from "../../../hooks/useForm"; // Verifica la ruta correcta
+import { useForm } from "../../../hooks/useForm";
 
 export const EditModal = ({ profile, onClose, onSave }) => {
   // Asegurar que profile siempre tiene un valor válido
@@ -8,8 +8,6 @@ export const EditModal = ({ profile, onClose, onSave }) => {
     name: "",
     lastname: "",
     description: "",
-    age: 0,
-    price: "",
     type: "",
     state: true,
     image: null,
@@ -22,8 +20,6 @@ export const EditModal = ({ profile, onClose, onSave }) => {
     name: safeProfile.name,
     lastname: safeProfile.lastname,
     description: safeProfile.description,
-    age: safeProfile.age,
-    price: safeProfile.price,
     type: safeProfile.type,
   });
 
@@ -40,6 +36,13 @@ export const EditModal = ({ profile, onClose, onSave }) => {
 
   // Validación y envío del formulario
   const handleSubmit = () => {
+    console.log("[Debug] Valores al iniciar submit:", {
+      formState,
+      imageFile,
+      safeProfile,
+      state,
+    });
+
     if (formState.name.trim().length < 3) {
       alert("El nombre debe tener al menos 2 caracteres.");
       return;
@@ -52,11 +55,15 @@ export const EditModal = ({ profile, onClose, onSave }) => {
       description: formState.description,
       age: formState.age || 0,
       price: formState.price || 0,
-      type: formState.type,
+      type: formState.type, // <-- Punto crítico
       image: imageFile || safeProfile.image,
       imageLoaded,
       state,
     };
+
+    console.log("[Debug] Perfil a guardar:", updatedProfile);
+    console.log("[Debug] Tipo de imageFile:", typeof imageFile);
+    console.log("[Debug] Tipo de safeProfile.image:", typeof safeProfile.image);
 
     onSave(updatedProfile);
   };
@@ -131,7 +138,7 @@ export const EditModal = ({ profile, onClose, onSave }) => {
             <label className="block text-gray-700">Puesto</label>
             <input
               name="type"
-              value={formState.type}
+              value={formState.type || ""}
               onChange={onInputChange}
               className="w-full p-2 border rounded"
             />
